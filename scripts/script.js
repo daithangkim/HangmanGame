@@ -1,8 +1,9 @@
+const hangmanImage = document.querySelector(".hangman-box img")
 const wordDisplay = document.querySelector(".word-display");
 const guessesText = document.querySelector(".guesses-text b");
 const keyboardDiv = document.querySelector(".keyboard");
 
-let currentWord, wrongGuessCount = 0;
+let currentWord, correctLetters = [], wrongGuessCount = 0;
 const maxGuesses = 6;
 
 //creating random words and their word display gaps
@@ -20,14 +21,22 @@ const initGame = (button, clickedLetter) => {
         //showing all correct letters on the word display
         [...currentWord].forEach((letter, index) => {
             if(letter === clickedLetter) {
+                correctLetters.push(letter);
                 wordDisplay.querySelectorAll("li")[index].innerText = letter;
                 wordDisplay.querySelectorAll("li")[index].classList.add("guessed");
             }
         })
     } else {
+        //if letter does not exists, update the wrongGuessCount and hangman image
         wrongGuessCount++;
+        hangmanImage.src = `images/hangman-${wrongGuessCount}.svg`;
     }
+    button.disabled = true;
     guessesText.innerText = `${wrongGuessCount} / ${maxGuesses}`;
+
+
+    if(wrongGuessCount === maxGuesses) return gameOver(false);
+    if(correctLetters.length === currentWord.length) return gameOver(true);
 }
 //creating keyboard buttons and adding event listeners
 for (let i = 97; i <= 122; i++) {
