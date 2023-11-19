@@ -26,9 +26,6 @@ const initGame = (button, clickedLetter) => {
         })
     } else {
         wrongGuessCount++;
-        if(wrongGuessCount == maxGuesses){
-
-        }
     }
     guessesText.innerText = `${wrongGuessCount} / ${maxGuesses}`;
 }
