@@ -42,7 +42,6 @@ body {
     display: flex;
     gap: 15px;
     list-style: none;
-    align-items: center;
     justify-content: center;
 }
 
