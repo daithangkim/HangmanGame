@@ -2,6 +2,7 @@ const hangmanImage = document.querySelector(".hangman-box img")
 const wordDisplay = document.querySelector(".word-display");
 const guessesText = document.querySelector(".guesses-text b");
 const keyboardDiv = document.querySelector(".keyboard");
+const gameModal = document.querySelector(".game-modal");
 
 let currentWord, correctLetters = [], wrongGuessCount = 0;
 const maxGuesses = 6;
@@ -11,8 +12,16 @@ const getRandomWord = () => {
     const {word, hint} = wordList[Math.floor(Math.random() * wordList.length)];
     currentWord = word;
     console.log(word);
-    document.querySelector(".Hinweis b").innerText = hint;
+    document.querySelector(".Hint b").innerText = hint;
     wordDisplay.innerHTML = word.split("").map(() => `<li class="letter"></li>`).join("");
+}
+
+const gameOver = (isVictory) => {
+    const modalText = isVictory ? `You found the word:`: 'The correct word was:';
+    gameModal.querySelector("img").src = `images/${isVictory? 'victory' : 'lost'}.gif`;
+    gameModal.querySelector("h4").innerText = isVictory ? 'Congrats!': 'Game over!';
+    gameModal.querySelector("p").innerHTML = `${modalText} <b>${currentWord}</b>`;
+    gameModal.classList.add("show");
 }
 
 const initGame = (button, clickedLetter) => {
@@ -47,3 +56,4 @@ for (let i = 97; i <= 122; i++) {
 }
 
 getRandomWord();
+playAgainBtn.addEventListener("click", getRandomWord);
